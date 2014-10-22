@@ -1,5 +1,9 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
+doctype html
+html
+  head
+    title SNAP!
+    link(rel='stylesheet', href='/css/style.css')
+    script(src='/js/phaser.js')
+  body
+    #gameContainer
+    script(src='/js/main.js')

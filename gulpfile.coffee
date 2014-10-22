@@ -21,10 +21,9 @@ gulp.task 'watch', ->
 
 gulp.task 'develop', ->
   livereload.listen()
-  nodemon({script: 'app.js', ex: 'js html'})
-    .on('start', ['watch'])
-    .on('restart', ->
+  nodemon {script: './bin/www', ex: 'js html'}
+    .on 'start', ['watch']
+    .on 'restart', ->
       console.log 'restart server'
-    )
 
 gulp.task('default', ['coffee', 'develop'])
