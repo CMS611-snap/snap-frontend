@@ -1,7 +1,6 @@
 class MainMenu
   constructor: (game) ->
     console.log 'MainMenu'
-
   create: ->
 
   update: ->

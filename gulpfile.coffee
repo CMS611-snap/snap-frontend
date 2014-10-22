@@ -10,6 +10,7 @@ gulp.task 'coffee', ->
   browserify
     entries: ['./src/main.coffee']
     extensions: ['.coffee', '.js']
+    debug: true
   .transform 'coffeeify'
   .bundle()
   .pipe source 'main.js'
