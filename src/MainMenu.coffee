@@ -3,7 +3,6 @@ class MainMenu
     console.log 'MainMenu'
 
   create: ->
-    console.log @game.input
     @startGame()
 
   update: ->
