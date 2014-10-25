@@ -1,8 +1,14 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    title SNAP!
+    link(rel='stylesheet', href='/css/style.css')
     script(src='/js/phaser.js')
+
+    // jQuery
+    script(type="text/javascript", src="http://code.jquery.com/jquery-1.10.1.min.js")
+    script(type="text/javascript", src="http://code.jquery.com/jquery-migrate-1.2.1.min.js")
+    block head
+
   body
     block content
