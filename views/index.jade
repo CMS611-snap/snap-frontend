@@ -1,12 +1,29 @@
-doctype html
-html
-  head
-    title SNAP!
-    link(rel='stylesheet', href='/css/style.css')
-    script(src='/js/phaser.js')
-    
-  body
+extends layout
 
-    #gameContainer
-    script(src='https://cdn.socket.io/socket.io-1.1.0.js')
-    script(src='/js/main.js')
+block head
+  script(type="text/javascript", src="/js/snapController.js")
+
+block content
+
+  script.
+    var snapController = new SnapController;
+    $(document).ready(function() {
+      snapController.init();
+    });
+
+  table
+    tbody
+      tr
+        td
+          div#gameContainer
+        td.gameInputCol
+          legend
+            h1 Input your words here!
+            form#snapForm
+              input.gameInput(name="snap_input")
+          div#snapsDiv
+
+
+  
+  script(type="text/javascript", src='https://cdn.socket.io/socket.io-1.1.0.js')
+  script(type="text/javascript", src='/js/main.js')
