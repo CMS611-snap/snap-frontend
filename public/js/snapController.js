@@ -1,5 +1,7 @@
 var SnapController = (function() {
 
+  $.notify.defaults({ className: "success" });
+
   var local = {};
 
   function SnapController() {}
