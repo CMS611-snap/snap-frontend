@@ -14,16 +14,8 @@ var SnapController = (function() {
       // Prevents page reload
       e.preventDefault();
       var data = $(this).serializeArray();
-
-      $.ajax({
-        type: "POST", 
-        url: "/test", 
-        data: data
-      }).done(function(res) {
-        console.log("res: ", JSON.stringify(res));
-      }).fail(function(e) {
-        console.log("failure: ", JSON.stringify(e));
-      });
+      Game.player.addWord(data[0].value);
+      Game.sendWords();
 
     });
   }
