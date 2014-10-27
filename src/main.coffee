@@ -1,4 +1,4 @@
-Boot      = require './Boot'
+Boot      = require './boot'
 Preloader = require './Preloader'
 MainMenu  = require './MainMenu'
 Game      = require './Game'
