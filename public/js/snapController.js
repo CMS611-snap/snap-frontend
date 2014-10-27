@@ -19,6 +19,9 @@ var SnapController = (function() {
       Game.player.addWord(data[0].value);
       Game.sendWord(data[0].value);
 
+      // Empty the input field
+      $('input[name=snap_input]').val('');
+
     });
   }
 
