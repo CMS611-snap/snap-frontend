@@ -8,7 +8,7 @@ class Game
 
     window.Game = @
 
-    @socket = io.connect('https://snapgame.herokuapp.com:443', {secure: true})
+    @socket = io.connect('https://snapgame.herokuapp.com', {secure: true})
     @socket.emit 'new player', 'name'
 
     @socket.on 'snap', (data) =>
