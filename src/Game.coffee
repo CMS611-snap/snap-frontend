@@ -6,16 +6,21 @@ class Game
     @textBox = new TextInput(game)
     @player  = new Player(game)
 
-    @socket  = io.connect('https://snapgame.herokuapp.com/')
-    @socket.emit  'new player'
+    window.Game = @
+
+    @socket = io.connect('https://snapgame.herokuapp.com:8080', {secure: true})
+    @socket.emit 'new player', 'name'
 
     @socket.on 'snap', (data) =>
       # update appropriate word for snap
+      @player.addPoints(data.d_score)
+      console.log data.d_score
+      console.log 'total points: ' + @player.points
 
   create: ->
-    console.log @game
 
   sendWord: (word) ->
+    console.log word
     @socket.emit 'new word', word
 
 module.exports = Game

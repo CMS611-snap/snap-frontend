@@ -6,7 +6,7 @@ class Player
   addWord: (word) ->
   	@wordlist.push word
 
-  addPoint: (num) ->
+  addPoints: (num) ->
   	@point += num
 
 

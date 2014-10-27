@@ -15,7 +15,7 @@ var SnapController = (function() {
       e.preventDefault();
       var data = $(this).serializeArray();
       Game.player.addWord(data[0].value);
-      Game.sendWords();
+      Game.sendWord(data[0].value);
 
     });
   }
