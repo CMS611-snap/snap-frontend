@@ -1,13 +1,13 @@
 class Player
   constructor: (@id)->
-  	@point = 0
+  	@points = 0
   	@wordlist = []
 
   addWord: (word) ->
   	@wordlist.push word
 
   addPoints: (num) ->
-  	@point += num
+  	@points += num
 
 
 module.exports = Player
