@@ -4,8 +4,8 @@ EventEmitter = require('events').EventEmitter
 
 class Game extends EventEmitter
   constructor: (game) ->
+    window.game = @
     @textBox = new TextInput(game)
-
     @textBox.on 'testing', -> console.log "got an event from input box"
 
     @player  = new Player(game)

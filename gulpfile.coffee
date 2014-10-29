@@ -31,4 +31,7 @@ gulp.task 'develop', ->
     .on 'restart', ->
       console.log 'restart server'
 
-gulp.task('default', ['coffee', 'develop'])
+gulp.task 'default', ['coffee', 'develop']
+
+gulp.task('heroku:development', ['coffee'])
+gulp.task('heroku:production', ['coffee'])
