@@ -5,21 +5,11 @@ inputBoxTemplate = require '../views/templates/inputBox.jade'
 class TextInput extends EventEmitter
   constructor: (game) ->
     inputBoxHTML = inputBoxTemplate()
-    $('#overlay').append(inputBoxHTML)
-                 .promise()
-                 .done => @setupKeyInput()
-
-
-  setupKeyInput: ->
-    console.log 'set it up'
-    #@$inputBox = $(inputBoxHTML)
-    #@$inputBox.mouseover =>
-    #  console.log 'barr'
-
-  go: ->
-    @emit 'testing'
-
-    # user EventEmitter to emit word when sumbited (jquery)
+    $inputBox    = $(inputBoxHTML)
+    $inputBox.appendTo('#overlay')
+    $inputBox.keypress (evt) =>
+      if evt.which is 13
+        @emit 'testing'
 
 module.exports = TextInput
 
