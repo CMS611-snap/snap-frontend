@@ -11,19 +11,11 @@ block content
       snapController.init();
     });
 
-  table
-    tbody
-      tr
-        td
-          div#gameContainer
-        td.gameInputCol
-          legend
-            h1 Input your words here!
-            form#snapForm
-              input.gameInput(name="snap_input")
-          div#snapsDiv
+  #gameContainer(style="display:none")
+  #overlay
+  #snapsDiv
 
 
-  
+
   script(type="text/javascript", src='https://cdn.socket.io/socket.io-1.1.0.js')
   script(type="text/javascript", src='/js/main.js')

@@ -1,14 +1,14 @@
-class TextInput
+EventEmitter = require('events').EventEmitter
 
-  local = {}
+inputBoxTemplate = require '../views/templates/inputBox.jade'
 
+class TextInput extends EventEmitter
   constructor: (game) ->
-    local.game = game
-    console.log 'TextInput'
+    @elem = inputBoxTemplate()
+    @emitter = new EventEmitter()
+    @.emit 'testing'
 
-  create: ->
-
-  update: ->
+    # user EventEmitter to emit word when sumbited (jquery)
 
 module.exports = TextInput
 

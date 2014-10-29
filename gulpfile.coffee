@@ -5,12 +5,16 @@ browserify = require 'browserify'
 nodemon    = require 'gulp-nodemon'
 concat     = require 'gulp-concat'
 source     = require 'vinyl-source-stream'
+jade       = require 'gulp-jade'
+through    = require 'through2'
+path       = require 'path'
 
 gulp.task 'coffee', ->
   browserify
     entries: ['./src/main.coffee']
     extensions: ['.coffee', '.js']
     debug: true
+  .transform 'jadeify'
   .transform 'coffeeify'
   .bundle()
   .pipe source 'main.js'
