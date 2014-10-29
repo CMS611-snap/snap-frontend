@@ -6,7 +6,8 @@ class Game
     console.log 'Game'
 
     @textBox = new TextInput(game)
-    @textBox.on 'testing', -> console.log "got an event from input box"
+    @textBox.on 'submit', (word) =>
+      @sendWord word
 
     @player  = new Player(game)
 
@@ -26,7 +27,6 @@ class Game
   create: ->
 
   sendWord: (word) ->
-    console.log word
     @socket.emit 'new word', word
 
 module.exports = Game
