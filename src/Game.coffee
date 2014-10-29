@@ -1,17 +1,16 @@
 Player       = require './Player'
 TextInput    = require './TextInput'
-EventEmitter = require('events').EventEmitter
 
-class Game extends EventEmitter
+class Game
   constructor: (game) ->
-    window.game = @
+    console.log 'Game'
+
     @textBox = new TextInput(game)
     @textBox.on 'testing', -> console.log "got an event from input box"
 
     @player  = new Player(game)
 
-    window.Game = @
-
+    ###
     @socket = io.connect('https://snapgame.herokuapp.com', {secure: true})
     @socket.emit 'new player', 'name'
 
@@ -22,6 +21,7 @@ class Game extends EventEmitter
       console.log "total points: #{@player.points}"
       $.notify "Snap! on #{data.word}"
       $.notify "You have #{@player.points} points", "info"
+    ###
 
   create: ->
 
