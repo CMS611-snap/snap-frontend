@@ -1,29 +1,33 @@
 Player       = require './Player'
 TextInput    = require './TextInput'
+WordsDisplay = require './WordsDisplay'
 
 class Game
   constructor: (game) ->
 
     @player  = new Player(game)
     @textBox = new TextInput(game)
+
     @textBox.on 'submit', (word) =>
       @sendWord word
-
 
     @socket = io.connect('http://localhost:8080', {secure: true})
     @socket.emit 'new player', 'name'
 
     @socket.on 'snap', (data) =>
       # update appropriate word for snap
-      @player.addPoints(data.d_score)
-      console.log "snap on: #{data.word}"
-      console.log "total points: #{@player.points}"
-      @wordsElem.text = @wordsElem.text + "#{data.word}\n"
+      @player.addPoints data.d_score
+      @wordsDisplay.addWord("#{data.word} +#{data.d_score}", '#00ff00')
 
   create: (game) ->
-    @wordsElem = game.add.text(game.world.centerX, 0, 'testing\n', {font: '30px Arial', fill: "#ffffff"})
+    @wordsDisplay = new WordsDisplay(game)
 
   sendWord: (word) ->
-    @socket.emit 'new word', word
+    if word in @player.words
+      @wordsDisplay.addWord(word, '#ff0000')
+    else
+      @player.addWord word
+      @socket.emit 'new word', word
+      @wordsDisplay.addWord(word, '#ffffff')
 
 module.exports = Game

@@ -6,16 +6,20 @@ class TextInput extends EventEmitter
   constructor: (game) ->
     # get the inputBox view template
     inputBoxHTML = inputBoxTemplate()
-    $inputBox    = $(inputBoxHTML)
+    @$inputBox    = $(inputBoxHTML)
 
     # add input box to the DOM
-    $inputBox.appendTo('#overlay')
+    @$inputBox.appendTo '#overlay'
 
     # on enter, emit the word to be submited to server
-    $inputBox.keypress (evt) =>
+    @$inputBox.keypress (evt) =>
       if evt.which is 13
-        @emit 'submit', $inputBox.val()
-        $inputBox.val ""
+        @emit 'submit', @$inputBox.val()
+        @$inputBox.val ""
+
+  setPosition: (top, left) ->
+    @$inputBox.css 'top', top
+    @$inputBox.css 'left', left
 
 module.exports = TextInput
 
