@@ -12,25 +12,25 @@ class Game
     @textBox.on 'submit', (word) =>
       @sendWord word
 
-    @socket = io.connect('http://localhost:8080', {secure: true})
+    @socket = io.connect('http://localhost:3000', {secure: true})
     @socket.emit 'new player', 'name'
 
     @socket.on 'snap', (data) =>
       # update appropriate word for snap
       @player.addPoints data.d_score
-      @wordsDisplay.addWord("#{data.word} +#{data.d_score}", '#00ff00')
+      @wordsDisplay.highlightSnapped data.word
+      @wordsDisplay.addWord("#{data.word} +#{data.d_score}", '#00ff00');
       @animateSnap(data.word)
 
   create: (game) ->
-    @wordsDisplay = new WordsDisplay(game)
+    @wordsDisplay = new WordsDisplay(game, @player);
 
   sendWord: (word) ->
-    if word in @player.words
-      @wordsDisplay.addWord(word, '#ff0000')
+    if word of @player.words
+      @wordsDisplay.addWord(word, "#ff0000");
     else
-      @player.addWord word
-      @socket.emit 'new word', word
-      @wordsDisplay.addWord(word, '#ffffff')
+      @socket.emit 'new word', word;
+      @wordsDisplay.addWord(word, "#ffffff", true);
 
   animateSnap: (word) ->
     snapMsg = @game.add.text(200, 200, 'SNAP', {font: '30px Arial', fill: '#00ff00'})

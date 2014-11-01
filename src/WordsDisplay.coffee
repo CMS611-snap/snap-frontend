@@ -1,13 +1,27 @@
-SPACING = 30
 class WordsDisplay
-  constructor: (@game) ->
-    @elem = @game.add.group()
+  
+  constructor: (@game, @player) ->
+    @elem = @game.add.group();
+    @spacing = 30;
 
-  addWord: (word, color) ->
+  addWord: (word, color, addToPlayer) ->
+    spacing = @spacing;
     @elem.forEach (text) ->
-      text.y -= SPACING
+      text.y -= spacing;
 
-    text = new Phaser.Text(@game, 0, @game.height - SPACING, word, {font: '20px Arial', fill: color})
-    @elem.add(text)
+    text = new Phaser.Text(@game, 
+                           0, 
+                           @game.height - @spacing, 
+                           word, 
+                           {font: '20px Arial', fill: color});
 
-module.exports = WordsDisplay
+    if addToPlayer
+      @player.addWord(word, text);
+
+    @elem.add(text);
+
+    highlightSnapped: (word) ->
+      if word of @player.words
+        @player.words[word].fill = "#77ff77";
+
+module.exports = WordsDisplay;

@@ -1,10 +1,11 @@
 class Player
   constructor: (@id)->
   	@points = 0
-  	@words = []
+  	@words = {}
 
-  addWord: (word) ->
-  	@words.push word
+  addWord: (word, phaserText) ->
+    if !(word of @words)
+      @words[word] = phaserText;
 
   addPoints: (num) ->
   	@points += num
