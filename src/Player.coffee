@@ -1,5 +1,5 @@
 class Player
-  constructor: (@id)->
+  constructor: (@game)->
   	@points = 0
   	@words = []
 

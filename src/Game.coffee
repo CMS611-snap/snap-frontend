@@ -13,7 +13,7 @@ class Game
       @sendWord word
 
     @socket = io.connect('https://snapgame.herokuapp.com', {secure: true})
-    @socket.emit 'new player', 'name'
+    # @socket.emit 'new player', 'name'
 
     @socket.on 'snap', (data) =>
       # update appropriate word for snap
