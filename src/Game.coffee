@@ -12,7 +12,7 @@ class Game
     @textBox.on 'submit', (word) =>
       @sendWord word
 
-    @socket = io.connect('http://localhost:8080', {secure: true})
+    @socket = io.connect('https://snapgame.herokuapp.com', {secure: true})
     @socket.emit 'new player', 'name'
 
     @socket.on 'snap', (data) =>
