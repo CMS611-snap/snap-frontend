@@ -4,13 +4,10 @@ WordsDisplay = require './WordsDisplay'
 
 class Game
   constructor: (game) ->
+    console.log 'Game'
     @game = game
 
     @player  = new Player(game)
-    @textBox = new TextInput(game)
-
-    @textBox.on 'submit', (word) =>
-      @sendWord word
 
     @socket = io.connect('https://snapgame.herokuapp.com', {secure: true})
     # @socket.emit 'new player', 'name'
@@ -23,6 +20,10 @@ class Game
 
   create: (game) ->
     @wordsDisplay = new WordsDisplay(game)
+    @textBox = new TextInput(game)
+    @textBox.setPosition(600, 60)
+    @textBox.on 'submit', (word) =>
+      @sendWord word
 
   sendWord: (word) ->
     if word in @player.words

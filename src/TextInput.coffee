@@ -14,12 +14,21 @@ class TextInput extends EventEmitter
     # on enter, emit the word to be submited to server
     @$inputBox.keypress (evt) =>
       if evt.which is 13
-        @emit 'submit', @$inputBox.val()
-        @$inputBox.val ""
+        @emit 'submit', @getValue()
+        @setValue ""
 
   setPosition: (top, left) ->
     @$inputBox.css 'top', top
     @$inputBox.css 'left', left
+
+  destroy: ->
+    @$inputBox.remove()
+
+  getValue: ->
+    return @$inputBox.val()
+
+  setValue: (value) ->
+    @$inputBox.val value
 
 module.exports = TextInput
 
