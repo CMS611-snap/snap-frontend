@@ -6,6 +6,7 @@ class Game
   constructor: (game) ->
     console.log 'Game'
     @game = game
+    @playerName = null # set by the MainMenu
 
     @player  = new Player(game)
 
@@ -13,20 +14,24 @@ class Game
         @socket = io.connect('http://localhost:8080', {secure: false})
     else
         @socket = io.connect('https://snapgame.herokuapp.com:443', {secure: true})
-    # @socket.emit 'new player', 'name'
 
+  create: (game) ->
+    @scoreText = @game.add.text(400, 0, 'snaps: ', {font: '20px Arial', fill: '#ffffff'})
+
+    @socket.emit 'new player', @playerName
     @socket.on 'snap', (data) =>
       # update appropriate word for snap
       @player.addPoints data.d_score
       @wordsDisplay.addWord("#{data.word} +#{data.d_score}", '#00ff00')
       @animateSnap(data.word)
+      @scoreText.text = "snaps: #{data.d_score}"
 
-  create: (game) ->
     @wordsDisplay = new WordsDisplay(game)
-    @textBox = new TextInput(game)
-    @textBox.setPosition(600, 120)
+    @textBox      = new TextInput(game)
+    @textBox.setPosition(600, 60)
     @textBox.on 'submit', (word) =>
       @sendWord word
+
 
   sendWord: (word) ->
     if word in @player.words
