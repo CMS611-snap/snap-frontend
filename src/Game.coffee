@@ -21,7 +21,7 @@ class Game
   create: (game) ->
     @wordsDisplay = new WordsDisplay(game)
     @textBox = new TextInput(game)
-    @textBox.setPosition(600, 60)
+    @textBox.setPosition(600, 120)
     @textBox.on 'submit', (word) =>
       @sendWord word
 
