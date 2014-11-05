@@ -1,7 +1,6 @@
 class Player
   constructor: (@game)->
-    @points = 0
-    @words = []
+    @reset()
 
   addWord: (word) ->
     @words.push word
@@ -9,5 +8,9 @@ class Player
   addPoints: (num) ->
     @points += num
     console.log "POINTS: " + @points
+
+  reset: ->
+    @points = 0
+    @words  = []
 
 module.exports = Player
