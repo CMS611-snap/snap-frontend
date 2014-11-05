@@ -9,7 +9,10 @@ class Game
 
     @player  = new Player(game)
 
-    @socket = io.connect('https://snapgame.herokuapp.com', {secure: true})
+    if window.location.search.indexOf("local") != -1
+        @socket = io.connect('http://localhost:8080', {secure: false})
+    else
+        @socket = io.connect('https://snapgame.herokuapp.com:443', {secure: true})
     # @socket.emit 'new player', 'name'
 
     @socket.on 'snap', (data) =>
