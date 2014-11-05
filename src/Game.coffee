@@ -16,14 +16,15 @@ class Game
         @socket = io.connect('https://snapgame.herokuapp.com:443', {secure: true})
 
   create: (game) ->
-    @socket.emit 'new player', @playerName
+    @scoreText = @game.add.text(400, 0, 'snaps: ', {font: '20px Arial', fill: '#ffffff'})
 
+    @socket.emit 'new player', @playerName
     @socket.on 'snap', (data) =>
       # update appropriate word for snap
       @player.addPoints data.d_score
       @wordsDisplay.addWord("#{data.word} +#{data.d_score}", '#00ff00')
       @animateSnap(data.word)
-      @score.text
+      @scoreText.text = "snaps: #{data.d_score}"
 
     @wordsDisplay = new WordsDisplay(game)
     @textBox      = new TextInput(game)
@@ -31,7 +32,6 @@ class Game
     @textBox.on 'submit', (word) =>
       @sendWord word
 
-    @score = game.add.text(100, 100, "snaps: ", {font: '30px Arial', '#ffffff'})
 
   sendWord: (word) ->
     if word in @player.words
