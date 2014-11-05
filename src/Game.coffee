@@ -24,7 +24,7 @@ class Game
       @player.addPoints data.d_score
       @wordsDisplay.addWord("#{data.word} +#{data.d_score}", '#00ff00')
       @animateSnap(data.word)
-      @scoreText.text = "snaps: #{data.d_score}"
+      @scoreText.text = "snaps: #{@player.points}"
 
     @wordsDisplay = new WordsDisplay(game)
     @textBox      = new TextInput(game)
