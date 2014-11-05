@@ -5,19 +5,22 @@ class MainMenu
   constructor: (@game) ->
     @start = false
 
-  create: ->
+  create: () ->
+    @game.add.text(0, 0, "snaps: ", {font: '30px Arial', '#ffffff'})
+
     @textBox = new TextInput(@game)
     @textBox.on 'submit', (name) =>
-      @game.socket.emit 'new player', name
       @start = true
-      @startGame()
+      @startGame(name)
 
   update: ->
 
   shutdown: ->
     @textBox.destroy()
 
-  startGame: ->
+  startGame: (playerName) ->
+    # TODO this is hacky, make it cleaner
+    @game.state.states['Game'].playerName = playerName
     @game.state.start 'Game'
 
 
