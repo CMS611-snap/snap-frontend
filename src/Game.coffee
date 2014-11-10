@@ -24,7 +24,14 @@ class Game
       @player.addPoints data.d_score
       @wordsDisplay.addWord("#{data.word} +#{data.d_score}", '#00ff00')
       @animateSnap(data.word)
-      @scoreText.text = "snaps: #{data.d_score}"
+      @scoreText.text = "snaps: #{@player.points}"
+
+    @socket.on 'game over', (data) =>
+      @player.reset()
+      @wordsDisplay.addWord('game over', '#0000ff')
+      @wordsDisplay.addWord("the winner(s) are: #{data.winners.join(' and ')}", '#ffffff')
+      @wordsDisplay.addWord('next round begins now', '#0000ff')
+
 
     @wordsDisplay = new WordsDisplay(game)
     @textBox      = new TextInput(game)
