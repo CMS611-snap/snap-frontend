@@ -22,7 +22,7 @@ class Game
     @socket.on 'snap', (data) =>
       # update appropriate word for snap
       @player.addPoints data.d_score
-      @wordsDisplay.addWord("#{data.word} +#{data.d_score}", '#00ff00')
+      @wordsDisplay.addWord("#{data.word} +#{data.d_score} (#{data.player})", '#00ff00')
       @animateSnap(data.word)
       @scoreText.text = "snaps: #{@player.points}"
 
