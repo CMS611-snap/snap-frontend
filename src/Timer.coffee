@@ -8,7 +8,7 @@ class Timer
 
   timeToString = (seconds, minutes, hours) ->
     timeString = ""
-    if (hours !== undefined)
+    if (hours != undefined)
       hoursString = ""
       if (hours < 10)
         hoursString += "0" + hours
@@ -16,7 +16,7 @@ class Timer
         hoursString += hours
       hoursString += ":"
       timeString += hoursString
-    if (minutes !== undefined)
+    if (minutes != undefined)
       minutesString = ""
       if (minutes < 10)
         minutesString += "0" + minutes
@@ -24,7 +24,7 @@ class Timer
         minutesString += minutes
       minutesString += ":"
       timeString += minutesString
-    if (seconds !== undefined)
+    if (seconds != undefined)
       secondsString = ""
       if (seconds < 10)
         secondsString += "0" + seconds
