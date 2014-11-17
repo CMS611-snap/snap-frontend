@@ -12,6 +12,8 @@ class Game
 
     if window.location.search.indexOf("local") != -1
         @socket = io.connect('http://localhost:8080', {secure: false})
+    else if window.location.search.indexOf("dev") != -1
+        @socket = io.connect('https://snap-backend-dev.herokuapp.com:443', {secure: true})
     else
         @socket = io.connect('https://snapgame.herokuapp.com:443', {secure: true})
 
