@@ -30,9 +30,8 @@ class Game
 
     @socket.on 'game over', (data) =>
       @player.reset()
-      @wordsDisplay.addWord('game over', '#0000ff')
-      @wordsDisplay.addWord("the winner(s) are: #{data.winners.join(' and ')}", '#ffffff')
-      @wordsDisplay.addWord('next round begins now', '#0000ff')
+      @wordsDisplay.addWord('game over', '#66ccff')
+      @wordsDisplay.addWord("the winner(s) are: #{data.winners.join(' and ')}", '#66ccff')
 
 
     @wordsDisplay = new WordsDisplay(game)
