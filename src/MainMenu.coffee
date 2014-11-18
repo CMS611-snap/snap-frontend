@@ -27,6 +27,6 @@ class MainMenu
     # TODO this is hacky, make it cleaner
     @game.state.states['Game'].playerName = playerName
     @game.state.start 'Game'
-    @timer.startInterval()
+    #@timer.startInterval()
 
 module.exports = MainMenu
