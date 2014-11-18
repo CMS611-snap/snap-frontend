@@ -28,6 +28,9 @@ class Game
       @animateSnap(data.word)
       @scoreText.text = "snaps: #{@player.points}"
 
+    @socket.on 'game started', (data) =>
+      @wordsDisplay.addWord('game started', '#66ccff')
+
     @socket.on 'game over', (data) =>
       @player.reset()
       @wordsDisplay.addWord('game over', '#66ccff')
