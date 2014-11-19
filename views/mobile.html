@@ -8,10 +8,10 @@
     <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
   </head>
   <body>
-    <form action="" id="nameForm">
+    <form action="" id="nameForm" onSubmit='return false;'>
       <input id="nameInput" type="text" class="gameInput" placeholder="Enter name">
     </form>
-    <div id="content"></div>
+    <div id="content" style="display: none"></div>
     <script type="text/jsx" src="/js/mobile.js"></script>
   </body>
 </html>
