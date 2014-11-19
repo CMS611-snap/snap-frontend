@@ -101,9 +101,14 @@ $(function() {
   });
 
   socket.on('scores', function(scoreboard) {
-    topScore = scoreboard.scores[0];
-    topScore.me = false;
     myScore = {player: global.name, score: scoreboard.myScore, me: true};
+    topScore = scoreboard.scores[0];
+    if (topScore.player == myScore.player &&
+        topScore.name == myScore.name &&
+          scoreboard.scores.length > 1) {
+      topScore = scoreboard.scores[1];
+    }
+    topScore.me = false;
     // TODO(tchajed): handle case where you have the top score
     global.WordList.setState({scores: [topScore, myScore]});
   });
