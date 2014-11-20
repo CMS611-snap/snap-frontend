@@ -1,14 +1,14 @@
-Boot      = require './boot'
-Preloader = require './Preloader'
-MainMenu  = require './MainMenu'
-Game      = require './Game'
-
-
 window.onload = ->
-  game = new Phaser.Game(540, 540, Phaser.AUTO, 'gameContainer')
+  # create our two.js canvas
+  two = new Two({
+                 width  : 500,
+                 height : 500
+                })
 
-  game.state.add 'Boot', Boot
-  game.state.add 'Preloader', Preloader
-  game.state.add 'MainMenu', MainMenu
-  game.state.add 'Game', Game
-  game.state.start 'Boot'
+  # add our two svg to the dom
+  two.appendTo $("#main").get(0)
+
+  # testing drawing of a circle
+  circle = two.makeCircle(20, 20, 20)
+  circle.fill = "#FF0000"
+  two.update()

@@ -3,11 +3,8 @@ watch      = require 'gulp-watch'
 livereload = require 'gulp-livereload'
 browserify = require 'browserify'
 nodemon    = require 'gulp-nodemon'
-concat     = require 'gulp-concat'
 source     = require 'vinyl-source-stream'
 jade       = require 'gulp-jade'
-through    = require 'through2'
-path       = require 'path'
 
 gulp.task 'coffee', ->
   browserify
