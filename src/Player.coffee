@@ -2,7 +2,7 @@ TWEEN = require 'tween.js'
 RADIUS = 3
 class Player
   constructor: (@two, name, color) ->
-    @color = color || 0x000000
+    @color = color || "#000000"
     @pos   = { x: Math.random() * 500, y: Math.random() * 500 }
     @snaps = 0
     @draw()
@@ -28,5 +28,8 @@ class Player
     drawLine.chain(hideLine)
     drawLine.start()
 
+  addPoints: (pts) ->
+    @snaps += pts
+    console.log "score: " + @snaps
 
 module.exports = Player
