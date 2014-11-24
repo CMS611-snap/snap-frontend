@@ -1,3 +1,25 @@
 #main {
     width:800px;
 }
+
+#gameState {
+    visibility:hidden;
+    height:0px;
+}
+
+#wordList {
+    height:100px;
+    overflow:auto;
+}
+
+#word {
+    margin-top:10px;
+}
+
+.snappedWord {
+    color:#12bb24;
+}
+
+.jumbotron {
+    padding-top:30px;
+}

@@ -22,13 +22,44 @@
   <body>
     <div class="container-fluid">
         <div id="main" class="container jumbotron">
+            <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Snap!</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Play</a></li>
+              <li><a href="#about">How to play</a></li>
+              <li><a href="#contact">About</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
             <form id="nameForm" class='form-horizontal' role='form'>
-                <input type="text" class="form-control" placeholder="Enter nickname and press enter">
+                <input id="name" type="text" class="form-control" placeholder="Enter nickname and press enter">
             </form>
+            <div id="gameState" class="container">
+                <div id="scoreDiv">
+                    <p class="text-right">SCORE: <span id="score">0</score></p>
+                </div>
+                <div id="wordList">
+                </div>
+                <form id="wordForm" class="form-horizontal" role="form">
+                    <input id="word" type="text" class="form-control" placeholder="Enter a word and press enter" disabled>
+                </form>
+            </div>
         </div>
     </div>
 
-    
+    <!-- Socket.io client -->
+    <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script> 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- include Snap! js files -->
