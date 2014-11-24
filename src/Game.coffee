@@ -1,5 +1,6 @@
 Viz    = require './Viz'
 Player = require './Player'
+io     = require 'socket.io'
 
 class Game
   constructor: ->

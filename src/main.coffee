@@ -9,5 +9,3 @@ window.onload = ->
     TWEEN.update(time)
     game.viz.two.update()
   animate()
-
-  console.log 'good to go'

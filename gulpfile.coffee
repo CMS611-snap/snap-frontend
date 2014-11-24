@@ -19,7 +19,6 @@ gulp.task 'coffee', ->
 
 gulp.task 'watch', ->
   gulp.watch './src/*.coffee', ['coffee']
-      .on 'change', livereload.changed
 
 #gulp.task 'develop', ->
 #  livereload.listen()
