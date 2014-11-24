@@ -1,14 +1,11 @@
-Boot      = require './boot'
-Preloader = require './Preloader'
-MainMenu  = require './MainMenu'
-Game      = require './Game'
-
-
 window.onload = ->
-  game = new Phaser.Game(540, 540, Phaser.AUTO, 'gameContainer')
+  Game  = require './Game'
+  TWEEN = require 'tween.js'
 
-  game.state.add 'Boot', Boot
-  game.state.add 'Preloader', Preloader
-  game.state.add 'MainMenu', MainMenu
-  game.state.add 'Game', Game
-  game.state.start 'Boot'
+  game = new Game()
+
+  animate = (time) ->
+    requestAnimationFrame(animate)
+    TWEEN.update(time)
+    game.viz.two.update()
+  animate()

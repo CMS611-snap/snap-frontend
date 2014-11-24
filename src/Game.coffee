@@ -1,74 +1,50 @@
-Player       = require './Player'
-TextInput    = require './TextInput'
-WordsDisplay = require './WordsDisplay'
+Viz    = require './Viz'
+Player = require './Player'
 
 class Game
-  constructor: (game) ->
-    console.log 'Game'
-    @game = game
-    @playerName = null # set by the MainMenu
+  constructor: ->
+    @players = {}
+    @player  = null
 
-    @player  = new Player(game)
+    @viz = new Viz(500, 500)
+    @viz.two.appendTo $("#viz").get(0)
 
-    if window.location.search.indexOf("local") != -1
-        @socket = io.connect('http://localhost:8080', {secure: false})
-    else
-        @socket = io.connect('https://snapgame.herokuapp.com:443', {secure: true})
 
-  create: (game) ->
-    @scoreText = @game.add.text(400, 0, 'snaps: ', {font: '20px Arial', fill: '#ffffff'})
+    for i in [0...2]
+      @players[i] = new Player(@viz.two, 'name')
 
-    @socket.emit 'new player', @playerName
-    @socket.on 'snap', (data) =>
-      # update appropriate word for snap
+    @players[0].snap(@players[1])
+
+    @joinGame 'sabrina' # FIXME this should be the player's name
+
+    $wordInput = $('#wordInput')
+    $wordInput.keyup (evt) =>
+      @sendWord $wordInput.val() if evt.keyCode is 13
+
+  joinGame: (playerName) ->
+    @player = new Player(@viz.two, playerName, "#00FF00")
+    @socket = @setupSocket()
+
+    @socket.emit 'new player', playerName
+    @socket.on 'game started', (data) ->
+      # TODO
+      console.log 'game started'
+    @socket.on 'game over', (data) ->
+      # TODO
+      console.log 'game over'
+    @socket.on 'snap', (data) ->
       @player.addPoints data.d_score
-      @wordsDisplay.addWord("#{data.word} +#{data.d_score}", '#00ff00')
-      @animateSnap(data.word)
-      @scoreText.text = "snaps: #{@player.points}"
-
-    @socket.on 'game over', (data) =>
-      @player.reset()
-      @wordsDisplay.addWord('game over', '#0000ff')
-      @wordsDisplay.addWord("the winner(s) are: #{data.winners.join(' and ')}", '#ffffff')
-      @wordsDisplay.addWord('next round begins now', '#0000ff')
-
-
-    @wordsDisplay = new WordsDisplay(game)
-    @textBox      = new TextInput(game)
-    @textBox.setPosition(600, 60)
-    @textBox.on 'submit', (word) =>
-      @sendWord word
 
 
   sendWord: (word) ->
-    if word in @player.words
-      @wordsDisplay.addWord(word, '#ff0000')
+    @socket.emit 'new word', word
+
+  setupSocket: ->
+    if window.location.search.indexOf("local") != -1
+        return io.connect('http://localhost:8080', {secure: false})
+    else if window.location.search.indexOf("dev") != -1
+        return io.connect('https://snap-backend-dev.herokuapp.com:443', {secure: true})
     else
-      @player.addWord word
-      @socket.emit 'new word', word
-      @wordsDisplay.addWord(word, '#ffffff')
-
-  animateSnap: (word) ->
-    snapMsg = @game.add.text(200, 200, 'SNAP', {font: '30px Arial', fill: '#00ff00'})
-    snapMsg.anchor = {x: 0.5, y:0.5}
-    snapMsg.scale.x = 0
-    snapMsg.scale.y = 0
-    scaleIn = @game.add.tween(snapMsg.scale)
-                   .to({x: 1, y: 1}, 1000)
-                   .easing(Phaser.Easing.Elastic.Out)
-
-    alphaOut = @game.add.tween(snapMsg)
-                    .delay(500)
-                    .to({alpha: 0}, 200)
-                    .easing(Phaser.Easing.Quadratic.In)
-
-    destroyMsg = ->
-      snapMsg.destroy()
-      scaleIn.destory()
-      alphaOut.destroy()
-    alphaOut._lastChild.onComplete.add( -> destroyMsg )
-
-    scaleIn.chain(alphaOut)
-           .start()
+        return io.connect('https://snapgame.herokuapp.com:443', {secure: true})
 
 module.exports = Game
