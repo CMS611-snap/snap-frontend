@@ -26,14 +26,18 @@ class Game
     @socket = @setupSocket()
 
     @socket.emit 'new player', playerName
+
     @socket.on 'game started', (data) ->
-      # TODO
-      console.log 'game started'
+      for player in data.players
+        @players[player] = new Player(@viz.two, player)
+
     @socket.on 'game over', (data) ->
       # TODO
       console.log 'game over'
+
     @socket.on 'snap', (data) ->
       @player.addPoints data.d_score
+      @player.snap(@players[data.player])
 
 
   sendWord: (word) ->
