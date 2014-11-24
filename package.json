@@ -2,9 +2,6 @@
   "name": "snap-frontend",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
   "dependencies": {
     "body-parser": "~1.8.1",
     "coffee-script": "^1.8.0",
