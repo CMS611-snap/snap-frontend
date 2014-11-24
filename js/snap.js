@@ -1,10 +1,13 @@
 var socket =io('http://localhost:8080');
 var playerName = ''
 var score = 0
-
+var topic = ''
 $( "#nameForm" ).submit(function( event ) {
     playerName = $('#name').val();
     socket.emit('new player', playerName);
+    $('#info').fadeOut(400, function() {
+      $('#info').html('<strong> Hi '+playerName+',</strong> important information will appear here.').fadeIn(500);
+      });
 });
 
 $("#wordForm").submit(function(event){
@@ -32,14 +35,29 @@ socket.on('user joined', function(data) {
     }
 });
 
+socket.on('new topic', function(data) {
+    topic = data
+    $('#info').fadeOut(400, function() {
+        $('#info').html('<strong>Topic set to:</strong> '+topic).fadeIn(500);
+    });
+    $('#wordListInfo').hide();
+    $('#wordListInfo').html('<strong>Your words will appear here:</strong>');
+    $('#wordListInfo').fadeIn(500);
+});
+
 socket.on('game started', function(data) {
     //start client timer here
     $('#word').removeAttr('disabled');
+    $('#info').fadeOut(200, function() {
+        $('#info').html('<strong> Game has started! </strong> Go go go! Topic is '+topic+'.').fadeIn(300);
+    });
 });
 
 function enterGameState() {
-    $( "#nameForm" ).fadeOut( "slow", function() {
+    $( "#nameForm" ).fadeOut( 400, function() {
         $('#gameState').css('visibility', 'visible');
+        $('#gameState').hide();
         $('#gameState').css('height','auto');
+        $('#gameState').fadeIn(500);
     });
 }
