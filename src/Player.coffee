@@ -1,4 +1,4 @@
-TWEEN = require 'tween.js'
+TWEEN  = require 'tween.js'
 RADIUS = 3
 class Player
   constructor: (@two, name, color) ->

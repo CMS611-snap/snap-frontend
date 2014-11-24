@@ -27,7 +27,9 @@ class Game
 
     @socket.emit 'new player', playerName
 
-    @socket.on 'game started', (data) ->
+    @socket.on 'game started', (data) =>
+      console.log 'game started'
+      console.log data.players.length
       for player in data.players
         @players[player] = new Player(@viz.two, player)
 
@@ -35,7 +37,8 @@ class Game
       # TODO
       console.log 'game over'
 
-    @socket.on 'snap', (data) ->
+    @socket.on 'snap', (data) =>
+      console.log 'snap'
       @player.addPoints data.d_score
       @player.snap(@players[data.player])
 
