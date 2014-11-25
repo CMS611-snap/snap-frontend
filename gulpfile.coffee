@@ -20,14 +20,14 @@ gulp.task 'coffee', ->
 gulp.task 'watch', ->
   gulp.watch './src/*.coffee', ['coffee']
 
-#gulp.task 'develop', ->
-#  livereload.listen()
-#  nodemon {script: './bin/www', ex: 'js html'}
-#    .on 'start', ['watch']
-#    .on 'restart', ->
-#      console.log 'restart server'
-#
-#gulp.task 'default', ['coffee', 'develop']
+gulp.task 'develop', ->
+  livereload.listen()
+  nodemon {script: 'app.js', ex: 'js html'}
+    .on 'start', ['watch']
+    .on 'restart', ->
+      console.log 'restart server'
+
+gulp.task 'default', ['coffee', 'develop']
 
 gulp.task('heroku:development', ['coffee'])
 gulp.task('heroku:production', ['coffee'])
