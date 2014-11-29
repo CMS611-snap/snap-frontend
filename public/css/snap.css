@@ -1,5 +1,5 @@
 #main {
-    width:800px;
+    width:70%;
 }
 
 #gameState {
@@ -14,6 +14,11 @@
 
 #word {
     margin-top:10px;
+    border: 1px solid #999;
+}
+
+#name {
+    border: 1px solid #999;
 }
 
 .snappedWord {
@@ -22,4 +27,8 @@
 
 .jumbotron {
     padding-top:30px;
+}
+
+#info {
+    font-size:20px;
 }
