@@ -57,6 +57,10 @@ class Game
       score = data.d_score
       @player.addPoints score
       @player.snap(@players[data.player])
+      # Play a random snap sound
+      sound = "#snap" + Math.floor(Math.random() * 12)
+      console.log sound
+      $(sound).trigger("play")
       $('#wordList').html()
       $('#wordList').append('<span class="snappedWord">'+data.word+' ('+data.player+')</span><br>')
       $('#score').html(@player.snaps)
