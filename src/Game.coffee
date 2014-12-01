@@ -61,6 +61,9 @@ class Game
       $('#wordList').append('<span class="snappedWord">'+data.word+' ('+data.player+')</span><br>')
       $('#score').html(@player.snaps)
 
+    @socket.on 'disconnect', () =>
+      location.reload()
+
   sendWord: (word) ->
     @socket.emit 'new word', word
     $('#wordList').append('<span>'+word.toLowerCase()+'</span><br>')
