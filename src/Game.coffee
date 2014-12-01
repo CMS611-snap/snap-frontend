@@ -68,12 +68,11 @@ class Game
     $("#wordList").animate({ scrollTop: $("#wordList").prop("scrollHeight")}, 100)
 
   setupSocket: ->
-    return io.connect('http://localhost:8080', {secure: false})
-  #if window.location.search.indexOf("local") != -1
-  #      return io.connect('http://localhost:8080', {secure: false})
-  #  else if window.location.search.indexOf("dev") != -1
-  #      return io.connect('https://snap-backend-dev.herokuapp.com:443', {secure: true})
-  #  else
-  #      return io.connect('https://snapgame.herokuapp.com:443', {secure: true})
+    if window.location.search.indexOf("local") != -1
+        return io.connect('http://localhost:8080', {secure: false})
+      else if window.location.search.indexOf("dev") != -1
+        return io.connect('https://snap-backend-dev.herokuapp.com:443', {secure: true})
+      else
+        return io.connect('https://snapgame.herokuapp.com:443', {secure: true})
 
 module.exports = Game
