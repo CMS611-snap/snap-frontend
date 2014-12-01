@@ -18,9 +18,18 @@ class Game
       evt.preventDefault()
       @sendWord $('#word').val()
 
+    @socket = @setupSocket()
+    @socket.on 'new topic', (data) =>
+      @topic = data
+      $('#info').fadeOut 400, =>
+          $('#info').html('<strong>Topic set to:</strong> ' + @topic).fadeIn(500)
+      $('#wordListInfo').hide()
+      $('#wordListInfo').html('<strong>Your words will appear here:</strong>')
+      $('#wordListInfo').fadeIn(500)
+
+
   joinGame: (playerName) ->
     @player = new Player(@viz.two, playerName, "#00FF00")
-    @socket = @setupSocket()
     $('#info').fadeOut 400, ->
       $('#info').html('<strong> Hi '+playerName+',</strong> important information will appear here.').fadeIn(500)
     $( "#nameForm" ).fadeOut 400, ->
@@ -44,21 +53,13 @@ class Game
       #TODO state winners
       $('#word').prop('disabled', true)
 
-    @socket.on 'new topic', (data) =>
-      @topic = data
-      $('#info').fadeOut 400, =>
-          $('#info').html('<strong>Topic set to:</strong> ' + @topic).fadeIn(500)
-      $('#wordListInfo').hide()
-      $('#wordListInfo').html('<strong>Your words will appear here:</strong>')
-      $('#wordListInfo').fadeIn(500)
-
     @socket.on 'snap', (data) =>
       score = data.d_score
       @player.addPoints score
       @player.snap(@players[data.player])
       $('#wordList').html()
       $('#wordList').append('<span class="snappedWord">'+data.word+' ('+data.player+')</span><br>')
-      $('#score').html(score)
+      $('#score').html(@player.snaps)
 
   sendWord: (word) ->
     @socket.emit 'new word', word
@@ -67,11 +68,12 @@ class Game
     $("#wordList").animate({ scrollTop: $("#wordList").prop("scrollHeight")}, 100)
 
   setupSocket: ->
-    if window.location.search.indexOf("local") != -1
-        return io.connect('http://localhost:8080', {secure: false})
-    else if window.location.search.indexOf("dev") != -1
-        return io.connect('https://snap-backend-dev.herokuapp.com:443', {secure: true})
-    else
-        return io.connect('https://snapgame.herokuapp.com:443', {secure: true})
+    return io.connect('http://localhost:8080', {secure: false})
+  #if window.location.search.indexOf("local") != -1
+  #      return io.connect('http://localhost:8080', {secure: false})
+  #  else if window.location.search.indexOf("dev") != -1
+  #      return io.connect('https://snap-backend-dev.herokuapp.com:443', {secure: true})
+  #  else
+  #      return io.connect('https://snapgame.herokuapp.com:443', {secure: true})
 
 module.exports = Game
