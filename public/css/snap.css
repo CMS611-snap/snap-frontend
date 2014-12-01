@@ -1,0 +1,41 @@
+#main {
+    width:70%;
+    border:1px solid #3388bb;
+}
+
+#gameState {
+    visibility:hidden;
+    height:0px;
+}
+
+#wordList {
+    height:100px;
+    overflow:auto;
+}
+
+#word {
+    margin-top:10px;
+    border: 1px solid #3388bb;
+}
+
+#name {
+    border: 1px solid #3388bb;
+}
+
+.snappedWord {
+    color:#12bb24;
+}
+
+.jumbotron {
+    padding-top:30px;
+}
+
+#info {
+    font-size:20px;
+    color:#3388bb;
+}
+
+.alert-success {
+    background: none;
+    border: none;
+}

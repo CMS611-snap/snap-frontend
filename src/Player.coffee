@@ -1,7 +1,7 @@
-TWEEN = require 'tween.js'
+TWEEN  = require 'tween.js'
 RADIUS = 3
 class Player
-  constructor: (@two, name, color) ->
+  constructor: (@two, @name, color) ->
     @color = color || "#000000"
     @pos   = { x: Math.random() * 500, y: Math.random() * 500 }
     @snaps = 0

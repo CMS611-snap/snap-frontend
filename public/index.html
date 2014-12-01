@@ -8,10 +8,10 @@
 
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Snap Stylesheet -->
     <link rel="stylesheet" href="./css/snap.css">
-    
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -22,31 +22,11 @@
   <body>
     <div class="container-fluid">
         <div id="main" class="container jumbotron">
-            <nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Snap!</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Play</a></li>
-              <li><a href="#about">How to play</a></li>
-              <li><a href="#contact">About</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </nav>
             <div class="alert alert-success">
-                <span id="info"><strong>Welcome to Snap!</strong> Game has not yet started. What's your name?</span>
+                <span id="info"><strong>Welcome to Snap!</strong> What's your name?</span>
     	    </div>
             <form id="nameForm" class='form-horizontal' role='form'>
-                <input id="name" type="text" class="form-control" placeholder="Enter nickname and press enter">
+                <input id="name" type="text" class="form-control" placeholder="Enter your name and press enter">
             </form>
             <div id="gameState" class="container">
                 <div id="scoreDiv">
@@ -58,16 +38,22 @@
                 <form id="wordForm" class="form-horizontal" role="form">
                     <input id="word" type="text" class="form-control" placeholder="Enter a word and press enter" disabled>
                 </form>
+            <div id="viz"></div>
             </div>
         </div>
+<p class='text-center'>Shalom Abate, Tej Chajed, Xinyue Deng, Sabrina Drammis, Sam Edson, Daniel Sanchez, Zygimantas Straznickas, Shuang Yin
+<br>Other important information goes here.
+</p>
     </div>
 
     <!-- Socket.io client -->
-    <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script> 
+    <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- include Snap! js files -->
     <script src="./js/snap.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/two.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   </body>

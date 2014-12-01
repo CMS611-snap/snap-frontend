@@ -19,11 +19,10 @@ gulp.task 'coffee', ->
 
 gulp.task 'watch', ->
   gulp.watch './src/*.coffee', ['coffee']
-      .on 'change', livereload.changed
 
 gulp.task 'develop', ->
   livereload.listen()
-  nodemon {script: './bin/www', ex: 'js html'}
+  nodemon {script: 'app.js', ex: 'js html'}
     .on 'start', ['watch']
     .on 'restart', ->
       console.log 'restart server'
