@@ -57,16 +57,18 @@ class Game
       $('#word').prop('disabled', true)
 
     @socket.on 'snap', (data) =>
-      score = data.d_score
-      @player.addPoints score
-      @player.snap(@players[data.player])
+      @player.addPoints data.d_score
+      snappedPlayers = data.player.filter (name) => name isnt @player.name
+      for player in snappedPlayers
+        @player.snap(@players[player])
+
       # Play a random snap sound
       sound = "#snap" + Math.floor(Math.random() * 12)
-      console.log sound
       $(sound).trigger("play")
+
       $('#wordList').html()
-      $('#wordList').append('<span class="snappedWord">'+data.word+' ('+data.player+')</span><br>')
-      $('#score').html(@player.snaps)
+      $('#wordList').append('<span class="snappedWord">'+data.word+' ('+snappedPlayers+')</span><br>')
+      $('#score').html(@player.score)
 
     @socket.on 'disconnect', () =>
       location.reload()
