@@ -6,8 +6,9 @@ class Game
     @players = {}
     @player  = null
     @topic   = ''
-
-    @viz = new Viz(500, 500)
+    width = $('#col2').width()
+    height = $('#col2').height()
+    @viz = new Viz(width, height)
     @viz.two.appendTo $("#viz").get(0)
 
     $('#nameForm').submit (evt) =>
@@ -35,7 +36,6 @@ class Game
     $( "#nameForm" ).fadeOut 400, ->
         $('#gameState').css('visibility', 'visible')
         $('#gameState').hide()
-        $('#gameState').css('height','auto')
         $('#gameState').fadeIn(500)
 
     @socket.emit 'new player', playerName
@@ -50,7 +50,10 @@ class Game
         @players[player] = new Player(@viz.two, player)
 
     @socket.on 'game over', (data) ->
-      #TODO state winners
+      winners = data.winners.join(', ')
+      
+      $('#info').fadeOut 200, =>
+          $('#info').html('<strong> Game Over! </strong> Congratulations to winners: '+ "<marquee>#{winners}</marquee>").fadeIn(300)
       $('#word').prop('disabled', true)
 
     @socket.on 'snap', (data) =>

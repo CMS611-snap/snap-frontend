@@ -1,20 +1,43 @@
+html,body {
+    background:#222;
+    overflow:hidden;
+}
+#nameForm {
+    vertical-align:middle;
+}
+#wrapper {
+    position:absolute; 
+    top:0;
+    bottom:0;
+}
+#credits {
+    color:#ccc;
+}
 #main {
-    width:70%;
+    padding:15px;
+    width:80%;
+    height:90%;
     border:1px solid #3388bb;
+    margin-bottom:0;
 }
 
 #gameState {
     visibility:hidden;
-    height:0px;
+    height:83%;
 }
 
 #wordList {
     height:100px;
     overflow:auto;
 }
-
+#wordForm {
+    position:relative:
+    bottom:10px;
+}
+#topp {
+    height:13%;
+}
 #word {
-    margin-top:10px;
     border: 1px solid #3388bb;
 }
 
