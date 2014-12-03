@@ -5,4 +5,8 @@ class Viz
                    width  : width,
                    height : height
                   })
+
+  getYPosition: (percentile) ->
+    return percentile  * @two.height
+
 module.exports = Viz
