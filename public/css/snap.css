@@ -39,6 +39,8 @@ html,body {
 }
 #word {
     border: 1px solid #3388bb;
+    -webkit-transition: border 0.5s;
+    transition: border 0.5s;
 }
 
 #name {

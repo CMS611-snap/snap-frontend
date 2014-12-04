@@ -12,6 +12,9 @@
     <!-- Snap Stylesheet -->
     <link rel="stylesheet" href="./css/snap.css">
 
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -62,7 +65,9 @@
 	<tr>
 		<td colspan="2">
                 <form id="wordForm" class="form-horizontal" role="form">
-                    <input id="word" type="text" class="form-control" placeholder="Enter a word and press enter" disabled>
+                    <div id="wordWrapper">
+                      <input id="word" type="text" class="form-control" placeholder="Enter a word and press enter" disabled>
+                    </div>
                 </form>
 
 </td>
@@ -94,6 +99,11 @@
     <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
     <!-- include Snap! js files -->
     <script src="./js/snap.js"></script>
     <script src="./js/main.js"></script>

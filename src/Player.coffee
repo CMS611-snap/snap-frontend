@@ -3,6 +3,7 @@ RADIUS = 3
 
 class Player
   constructor: (@two, @name, color) ->
+    @words = {};
     @opacity = if color then 1 else 0.6
     @color = color || "#000000"
     @pos   = { x: Math.random() * 500, y: Math.random() * 500 }
@@ -18,6 +19,13 @@ class Player
 
   addPoints: (pts) ->
     @score += pts
+
+  addWord: (word) =>
+    if word of @words
+      false
+    else 
+      @words[word] = null
+      true
 
   snap: (player) ->
     # draw a line from current player to other player

@@ -17,7 +17,15 @@ class Game
 
     $('#wordForm').submit (evt) =>
       evt.preventDefault()
-      @sendWord $('#word').val()
+      word = $('#word').val()
+      if @player.addWord(word)
+        @sendWord(word)
+      else
+        $('#word').css('border', '1px solid #BB3333')
+                  .css('-webkit-box-shadow', 'inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(232,102,102,.6)')
+                  .css('box-shadow', 'inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(232,102,102,.6)')
+        $("#wordWrapper").effect('shake', {distance: 10})
+        console.log('word used')
 
     @socket = @setupSocket()
     @socket.on 'new topic', (data) =>
