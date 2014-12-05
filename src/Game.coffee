@@ -61,10 +61,10 @@ class Game
       $('#info').fadeOut 200, =>
           $('#info').html('<strong> Game has started! </strong> Go go go! Topic is '+ @topic+'.').fadeIn(300)
       for player in data.players
-        @players[player] = new Player(@viz.two, player)
+        @players[player.uuid] = new Player(@viz.two, player.name)
 
     @socket.on 'game over', (data) ->
-      winners = data.winners.join(', ')
+      winners = data.winners.map((p) -> p.name).join(', ')
       
       $('#info').fadeOut 200, =>
           $('#info').html('<strong> Game Over! </strong> Congratulations to winners: '+ "<marquee>#{winners}</marquee>").fadeIn(300)
@@ -72,16 +72,16 @@ class Game
 
     @socket.on 'snap', (data) =>
       @player.addPoints data.d_score
-      snappedPlayers = data.player.filter (name) => name isnt @player.name
+      snappedPlayers = data.player.filter (p) => p.name isnt @player.name
       for player in snappedPlayers
-        @player.snap(@players[player])
+        @player.snap(@players[player.uuid])
+      playerNames = snappedPlayers.map (p) -> p.name
 
       # Play a random snap sound
       sound = "#snap" + Math.floor(Math.random() * 12)
       $(sound).trigger("play")
 
-      $('#wordList').html()
-      $('#wordList').append('<span class="snappedWord">'+data.word+' ('+snappedPlayers+')</span><br>')
+      $('#wordList').append("<span class=\"snappedWord\"> #{data.word} (#{playerNames.join(', ')})</span><br />")
       $('#score').html(@player.score)
 
     @socket.on 'disconnect', () =>

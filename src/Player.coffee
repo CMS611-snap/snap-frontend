@@ -28,6 +28,9 @@ class Player
       true
 
   snap: (player) ->
+    # TODO: add players that join late so this doesn't happen
+    if not player?
+      return
     # draw a line from current player to other player
     line        = @two.makeLine(@pos.x, @pos.y, @pos.x, @pos.y)
     line.stroke = "rgba(0, 255, 0, 1)"
