@@ -2,11 +2,11 @@ TWEEN  = require 'tween.js'
 RADIUS = 3
 
 class Player
-  constructor: (@two, @name, color) ->
-    @words = {};
+  constructor: (@two, @name, @id, color) ->
+    @words = {}
     @opacity = if color then 1 else 0.6
     @color = color || "#000000"
-    @pos   = { x: Math.random() * 500, y: Math.random() * 500 }
+    @pos   = { x: Math.random() * 200, y: Math.random() * 200}
     @score = 0
     @draw()
 
@@ -32,6 +32,7 @@ class Player
     # TODO: add players that join late so this doesn't happen
     if not player?
       return
+
     # draw a line from current player to other player
     line        = @two.makeLine(@pos.x, @pos.y, @pos.x, @pos.y)
     line.stroke = "rgba(0, 255, 0, 1)"
@@ -68,6 +69,20 @@ class Player
     hideLine.chain(shrinkCircle)
     shrinkCircle.chain(fadeOutCircle)
 
+    drawLine.start()
+
+  snapSubtle: (player) ->
+    # draw a line from current player to other player
+    line        = @two.makeLine(@pos.x, @pos.y, @pos.x, @pos.y)
+    line.stroke = "rgba(0, 0, 0, 0.5)"
+    dX   = ( player.pos.x - @pos.x ) / 2
+    dY   = ( player.pos.y - @pos.y ) / 2
+    drawLine = new TWEEN.Tween(line.vertices[1])
+                        .to( {x: "#{dX}", y: "#{dY}"}, 700)
+    hideLine = new TWEEN.Tween(line)
+                        .to({opacity: 0}, 800)
+                        .onComplete( => @two.remove(hideLine) )
+    drawLine.chain(hideLine)
     drawLine.start()
 
 module.exports = Player

@@ -8,7 +8,7 @@ class Game
     @player  = null
     @timer = null
     @topic   = ''
-    width = $('#col2').width()
+    width  = $('#col2').width()
     height = $('#col2').height()
     @viz = new Viz(width, height)
     @viz.two.appendTo $("#viz").get(0)
@@ -47,7 +47,10 @@ class Game
 
 
   joinGame: (playerName) ->
-    @player = new Player(@viz.two, playerName, "#00FF00")
+    # set the main player
+    @player = new Player(@viz.two, playerName, null, "#00FF00")
+
+    # update the display
     $('#info').fadeOut 400, ->
       $('#info').html('<strong> Hi '+playerName+',</strong> important information will appear here.').fadeIn(500)
     $( "#nameForm" ).fadeOut 400, ->
@@ -57,9 +60,9 @@ class Game
 
     @socket.emit 'new player', playerName
 
-    @socket.on 'game started', (data) =>
-      console.log data
+    @socket.on 'user joined', (identifier) => @player.id = identifier.uuid
 
+    @socket.on 'game started', (data) =>
       #start client timer here
       if data.elapsed
         $("#timeContainer").html('<p class="text-left">TIME: <span id="time"></span></p>')
@@ -68,11 +71,15 @@ class Game
 
       @topic = data.topic
 
+      # update the display
       $('#word').removeAttr('disabled')
       $('#info').fadeOut 200, =>
           $('#info').html('<strong> Game has started! </strong> Go go go! Topic is '+ @topic+'.').fadeIn(300)
+
+      # create player objects and their dots
       for player in data.players
-        @players[player.uuid] = new Player(@viz.two, player.name)
+        if player.uuid isnt @player.id
+          @players[player.uuid] = new Player(@viz.two, player.name, player.uuid)
 
     @socket.on 'game over', (data) =>
       winners = data.winners.map((p) -> p.name).join(', ')
@@ -82,7 +89,7 @@ class Game
       @player.reset()
 
       @timer?.stop()
-      
+
       $('#info').fadeOut 200, =>
           $('#info').html('<strong> Game Over! </strong> Congratulations to winners: '+ "<marquee>#{winners}</marquee>").fadeIn(300)
       $('#word').prop('disabled', true)
@@ -91,6 +98,7 @@ class Game
       @snap(data)
 
     @socket.on 'scores', (data) =>
+      console.log data
       for snap in data.snaps
         for p1 in snap.players
           player1 = @players[p1.uuid]
@@ -98,7 +106,15 @@ class Game
             continue
           for p2 in snap.players when p1.uuid != p2.uuid
             player2 = @players[p2.uuid]
-            player2?.snap(player1)
+            player2?.snapSubtle(player1)
+
+#      # update a player's score
+#      @player.addPoints data.d_score
+#      $('#score').html(@player.score)
+#
+#      # update the word list
+#      $('#wordList').html()
+#      $('#wordList').append('<span class="snappedWord">'+data.word+' ('+snappedPlayers+')</span><br>')
 
     @socket.on 'disconnect', () =>
       location.reload()
