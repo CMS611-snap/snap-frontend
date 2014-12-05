@@ -20,9 +20,12 @@ class Game
     $('#wordForm').submit (evt) =>
       evt.preventDefault()
       word = $('#word').val()
-      @sendWord word, () =>
+      @sendWord word, (snap) =>
         @player.addWord word
-        $('#wordList').append('<span>'+word.toLowerCase()+'</span><br>')
+        if snap?
+          @snap(snap)
+        else
+          $('#wordList').append('<span>'+word.toLowerCase()+'</span><br>')
         $('#word').val('')
         $("#wordList").animate({ scrollTop: $("#wordList").prop("scrollHeight")}, 100)
         $('#word').removeClass('usedWord')
@@ -85,18 +88,7 @@ class Game
       $('#word').prop('disabled', true)
 
     @socket.on 'snap', (data) =>
-      @player.addPoints data.d_score
-      snappedPlayers = data.player.filter (p) => p.name isnt @player.name
-      for player in snappedPlayers
-        @player.snap(@players[player.uuid])
-      playerNames = snappedPlayers.map (p) -> p.name
-
-      # Play a random snap sound
-      sound = "#snap" + Math.floor(Math.random() * 12)
-      $(sound).trigger("play")
-
-      $('#wordList').append("<span class=\"snappedWord\"> #{data.word} (#{playerNames.join(', ')})</span><br />")
-      $('#score').html(@player.score)
+      @snap(data)
 
     @socket.on 'scores', (data) =>
       for snap in data.snaps
@@ -111,10 +103,27 @@ class Game
     @socket.on 'disconnect', () =>
       location.reload()
 
+  snap: (data) ->
+    @player.addPoints data.d_score
+    snappedPlayers = data.player.filter (p) => p.name isnt @player.name
+    for player in snappedPlayers
+      @player.snap(@players[player.uuid])
+    playerNames = snappedPlayers.map (p) -> p.name
+
+    # Play a random snap sound
+    sound = "#snap" + Math.floor(Math.random() * 12)
+    $(sound).trigger("play")
+
+    $('#wordList').append("<span class=\"snappedWord\"> #{data.word} (#{playerNames.join(', ')})</span><br />")
+    $('#score').html(@player.score)
+
+
+  # success is a callback that is passed a snap event (or null)
+  # error is a callback that is passed an error string
   sendWord: (word, success, error) ->
     @socket.emit 'new word', word, (resp) ->
       if resp.success
-        success()
+        success(resp.snap)
       else
         error(resp.error)
 
