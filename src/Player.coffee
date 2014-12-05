@@ -17,6 +17,11 @@ class Player
     @circle.opacity = @opacity
     @circle.noStroke()
 
+  reset: () =>
+    @words = {}
+    @score = 0
+    @draw()
+
   addPoints: (pts) ->
     @score += pts
 

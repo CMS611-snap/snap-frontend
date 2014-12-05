@@ -65,8 +65,14 @@ class Game
       for player in data.players
         @players[player.uuid] = new Player(@viz.two, player.name)
 
-    @socket.on 'game over', (data) ->
+    @socket.on 'game over', (data) =>
       winners = data.winners.map((p) -> p.name).join(', ')
+      for id, player of @players
+        player.reset()
+
+      @player.reset()
+
+      @timer?.stop()
       
       $('#info').fadeOut 200, =>
           $('#info').html('<strong> Game Over! </strong> Congratulations to winners: '+ "<marquee>#{winners}</marquee>").fadeIn(300)

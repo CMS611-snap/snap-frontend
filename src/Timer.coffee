@@ -58,6 +58,9 @@ class Timer
         that.minutes++
       $(that.id).html(timeToString(that.seconds, that.minutes, that.hours))
 
-    setInterval(stepSecond, 1000)    
+    @interval = setInterval(stepSecond, 1000)
+
+  stop: () ->
+    clearInterval(@interval)
 
 module.exports = Timer
