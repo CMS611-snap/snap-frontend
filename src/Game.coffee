@@ -53,7 +53,7 @@ class Game
 
       #start client timer here
       if data.elapsed
-        $("#timeContainer").html('<p class="text-left">TIME: <span id="time"></score></p>')
+        $("#timeContainer").html('<p class="text-left">TIME: <span id="time"></span></p>')
         @timer = new Timer('#time', parseInt(data.elapsed/1000))
         @timer.startInterval()
 
