@@ -1,10 +1,12 @@
 Viz    = require './Viz'
 Player = require './Player'
+Timer  = require './Timer'
 
 class Game
   constructor: ->
     @players = {}
     @player  = null
+    @timer = null
     @topic   = ''
     width = $('#col2').width()
     height = $('#col2').height()
@@ -48,7 +50,13 @@ class Game
 
     @socket.on 'game started', (data) =>
       console.log data
+
       #start client timer here
+      if data.elapsed
+        $("#timeContainer").html('<p class="text-left">TIME: <span id="time"></score></p>')
+        @timer = new Timer('#time', parseInt(data.elapsed/1000))
+        @timer.startInterval()
+
       $('#word').removeAttr('disabled')
       $('#info').fadeOut 200, =>
           $('#info').html('<strong> Game has started! </strong> Go go go! Topic is '+ @topic+'.').fadeIn(300)
