@@ -26,11 +26,7 @@ class Player
     @score += pts
 
   addWord: (word) =>
-    if word of @words
-      false
-    else 
-      @words[word] = null
-      true
+    @words[word] = true
 
   snap: (player) ->
     # TODO: add players that join late so this doesn't happen

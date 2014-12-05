@@ -20,11 +20,17 @@ class Game
     $('#wordForm').submit (evt) =>
       evt.preventDefault()
       word = $('#word').val()
-      if @player.addWord(word)
-        @sendWord(word)
+      @sendWord word, () =>
+        @player.addWord word
+        $('#wordList').append('<span>'+word.toLowerCase()+'</span><br>')
+        $('#word').val('')
+        $("#wordList").animate({ scrollTop: $("#wordList").prop("scrollHeight")}, 100)
         $('#word').removeClass('usedWord')
-      else
-        $('#word').addClass('usedWord')
+      , (error) =>
+        if error == "duplicate"
+          $('#word').addClass('usedWord')
+        else
+          console.log "error submitting #{word}: #{error}"
         $("#wordWrapper").effect('shake', {distance: 10})
 
     @socket = @setupSocket()
@@ -105,11 +111,12 @@ class Game
     @socket.on 'disconnect', () =>
       location.reload()
 
-  sendWord: (word) ->
-    @socket.emit 'new word', word
-    $('#wordList').append('<span>'+word.toLowerCase()+'</span><br>')
-    $('#word').val('')
-    $("#wordList").animate({ scrollTop: $("#wordList").prop("scrollHeight")}, 100)
+  sendWord: (word, success, error) ->
+    @socket.emit 'new word', word, (resp) ->
+      if resp.success
+        success()
+      else
+        error(resp.error)
 
   setupSocket: ->
     if window.location.search.indexOf("local") != -1
