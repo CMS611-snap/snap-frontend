@@ -57,6 +57,8 @@ class Game
         @timer = new Timer('#time', parseInt(data.elapsed/1000))
         @timer.startInterval()
 
+      @topic = data.topic
+
       $('#word').removeAttr('disabled')
       $('#info').fadeOut 200, =>
           $('#info').html('<strong> Game has started! </strong> Go go go! Topic is '+ @topic+'.').fadeIn(300)
