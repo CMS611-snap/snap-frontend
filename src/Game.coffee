@@ -84,6 +84,16 @@ class Game
       $('#wordList').append("<span class=\"snappedWord\"> #{data.word} (#{playerNames.join(', ')})</span><br />")
       $('#score').html(@player.score)
 
+    @socket.on 'scores', (data) =>
+      for snap in data.snaps
+        for p1 in snap.players
+          player1 = @players[p1.uuid]
+          if not player1?
+            continue
+          for p2 in snap.players when p1.uuid != p2.uuid
+            player2 = @players[p2.uuid]
+            player2?.snap(player1)
+
     @socket.on 'disconnect', () =>
       location.reload()
 
