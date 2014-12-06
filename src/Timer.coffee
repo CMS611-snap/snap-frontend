@@ -21,42 +21,34 @@ class Timer
     {hours: hours, minutes: minutes, seconds: seconds}
 
   timeToString = (seconds, minutes, hours) ->
+    hoursString = ""
+    minutesString = ""
+    secondsString = ""
+    if hours < 10
+      hoursString = "0" + hours
+    else
+      hoursString = hours
+    if minutes < 10
+      minutesString = "0" + minutes
+    else
+      minutesString = minutes
+    if seconds < 10
+      secondsString = "0" + seconds
+    else
+      secondsString = seconds
     timeString = ""
-    if (hours != undefined)
-      hoursString = ""
-      if (hours < 10)
-        hoursString += "0" + hours
-      else
-        hoursString += hours
-      hoursString += ":"
-      timeString += hoursString
-    if (minutes != undefined)
-      minutesString = ""
-      if (minutes < 10)
-        minutesString += "0" + minutes
-      else
-        minutesString += minutes
-      minutesString += ":"
-      timeString += minutesString
-    if (seconds != undefined)
-      secondsString = ""
-      if (seconds < 10)
-        secondsString += "0" + seconds
-      else
-        secondsString += seconds
-      timeString += secondsString
-
-    timeString
+    if hours > 0
+      timeString += hoursString + ":"
+    timeString += "#{minutesString}:#{secondsString}"
+    return timeString
 
   startInterval: () ->
-
-    that = this
-    stepSecond = () ->
-      that.seconds++
-      if (that.seconds >= 60) 
-        that.seconds = 0
-        that.minutes++
-      $(that.id).html(timeToString(that.seconds, that.minutes, that.hours))
+    stepSecond = () =>
+      @seconds++
+      if @seconds >= 60
+        @seconds = @seconds % 60
+        @minutes++
+      $(@id).html(timeToString(@seconds, @minutes, @hours))
 
     @interval = setInterval(stepSecond, 1000)
 
