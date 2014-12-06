@@ -22,7 +22,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body> 
+  <body>
     <audio id="snap0" src="audio/snap0.wav" preload="auto"></audio>
     <audio id="snap1" src="audio/snap1.wav" preload="auto"></audio>
     <audio id="snap2" src="audio/snap2.wav" preload="auto"></audio>
@@ -36,75 +36,74 @@
     <audio id="snap10" src="audio/snap10.wav" preload="auto"></audio>
     <audio id="snap11" src="audio/snap11.wav" preload="auto"></audio>
     <div id="wrapper" class="container-fluid">
-        <div id="main" class="container jumbotron">
+      <div id="main" class="container jumbotron">
+        <div  id="topp">
+          <div class="alert alert-success">
+            <span id="info"><strong>Welcome to Snap!</strong> What's your name?</span>
+          </div>
+          <form id="nameForm" class='form-horizontal' role='form'>
+            <input id="name" type="text" class="form-control" placeholder="Enter your name and press enter">
+          </form>
+        </div>
+        <div id="gameState" class="container">
 
-       <div  id="topp">
-            <div class="alert alert-success">
-                <span id="info"><strong>Welcome to Snap!</strong> What's your name?</span>
-    	    </div>
-            <form id="nameForm" class='form-horizontal' role='form'>
-                <input id="name" type="text" class="form-control" placeholder="Enter your name and press enter">
-            </form>
-           </div>
-            <div id="gameState" class="container">
-
-        <table border="0" style="height:100%;width:100%" cellpadding="0" cellspacing="0">
-	<tr style="height:80%;">
-		<td style="width:30%;">
-                  <div style="height:100%">
-                       <p class="text-left">SCORE: <span id="score">0</score></p>
-                       <div id="timeContainer"></div>
-                        <span id="wordListInfo"></span>
-                        <div id="wordList">
-                        </div>
-                   </div>
-</td>
-		<td id="col2">
-                        <div id="viz"></div>
-</td>
-	</tr>
-	<tr>
-		<td colspan="2">
+          <table border="0" style="height:100%;width:100%" cellpadding="0" cellspacing="0">
+            <tr style="height:80%;">
+              <td style="width:30%;">
+                <div style="height:100%">
+                  <p class="text-left">SCORE: <span id="score">0</score></p>
+                  <div id="timeContainer"></div>
+                  <span id="wordListInfo"></span>
+                  <div id="wordList">
+                  </div>
+                </div>
+              </td>
+              <td id="col2">
+                <div id="viz"></div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
                 <form id="wordForm" class="form-horizontal" role="form">
-                    <div id="wordWrapper">
-                      <input id="word" type="text" class="form-control" placeholder="Please wait for the game to start" disabled>
-                    </div>
+                  <div id="wordWrapper">
+                    <input id="word" type="text" class="form-control" placeholder="Please wait for the game to start" disabled>
+                  </div>
                 </form>
 
-</td>
-	</tr>
-</table>
-</div>
-<!--
-          
-   
-           <div id="container2">
-               <div id="container1">
-                   <div id="col1">
-                   </div>
-                   <div id="col2">
-                   </div>
-               </div>
-           </div> 
-
-
-            </div>
--->
+              </td>
+            </tr>
+          </table>
         </div>
-<div id="credits" class="text-left">
-  <div>"Snap!" is a playful activity that helps groups to quickly understand and see what they think about a given topic</div>
-  <div>Game concept created by Paul Z. Jackson (<a href="http://www.appliedimprov.com/">AIN</a>) and Pablo Suarez (<a href="http://www.climatecentre.org/">Climate Centre</a>)</div>
-  <div>Digital Game created by Shalom Abate, Tej Chajed, Xinyue Deng, Sabrina Drammis, Sam Edson, Daniel Sanchez, Zygimantas Straznickas, Shuang Yin as part of a course by the <a href="http://gamelab.mit.edu/">MIT Game Lab</a> in collaboration with the Red Cross/Red Crescent Climate Centre</div>
-  <!--
-<br>
-<div class="infoPics">
-  <img height="100" alt="Red Cross logo" src="/images/red_cross_2.png">
-  &nbsp;
-  <img height="100" alt="MIT Game Lab logo" src="/images/mit_game_lab.png">
-</div>
-!-->
+        <!--
 
-</div>
+
+          <div id="container2">
+          <div id="container1">
+          <div id="col1">
+          </div>
+          <div id="col2">
+          </div>
+          </div>
+          </div>
+
+
+          </div>
+        -->
+    </div>
+    <div id="credits" class="text-left">
+      <div>"Snap!" is a playful activity that helps groups to quickly understand and see what they think about a given topic</div>
+      <div>Game concept created by Paul Z. Jackson (<a href="http://www.appliedimprov.com/">AIN</a>) and Pablo Suarez (<a href="http://www.climatecentre.org/">Climate Centre</a>)</div>
+      <div>Digital Game created by Shalom Abate, Tej Chajed, Xinyue Deng, Sabrina Drammis, Sam Edson, Daniel Sanchez, Zygimantas Straznickas, Shuang Yin as part of a course by the <a href="http://gamelab.mit.edu/">MIT Game Lab</a> in collaboration with the Red Cross/Red Crescent Climate Centre</div>
+      <!--
+        <br>
+        <div class="infoPics">
+        <img height="100" alt="Red Cross logo" src="/images/red_cross_2.png">
+        &nbsp;
+        <img height="100" alt="MIT Game Lab logo" src="/images/mit_game_lab.png">
+        </div>
+        !-->
+
+    </div>
     </div>
 
     <!-- Socket.io client -->
