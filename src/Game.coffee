@@ -7,6 +7,7 @@ class Game
     @players = {}
     @player  = null
     @timer = null
+    @maxWords = null
     @topic   = ''
     width  = $('#col2').width()
     height = $('#col2').height()
@@ -22,6 +23,9 @@ class Game
       word = $('#word').val()
       @sendWord word, (snap) =>
         @player.addWord word
+        if @maxWords and @player.word_count >= @maxWords
+          $('#word').prop('disabled', true)
+          $('#word').attr('placeholder', "Already submitted #{@player.word_count} words/phrases")
         if snap?
           @snap(snap)
         else
@@ -68,14 +72,20 @@ class Game
         $("#timeContainer").html('<p class="text-left">TIME: <span id="time"></span></p>')
         @timer = new Timer('#time', parseInt(data.elapsed/1000))
         @timer.startInterval()
-
+      @maxWords = data.maxWords
       @topic = data.topic
 
       # update the display
       $('#word').removeAttr('disabled')
-      $('#word').attr('placeholder', 'Enter a word and press enter')
-      $('#info').fadeOut 200, =>
-          $('#info').html('<strong> Game has started! </strong> Go go go! Topic is '+ @topic+'.').fadeIn(300)
+      $('#word').attr('placeholder', 'Enter a word or phrase and press enter')
+      $('#info').fadeOut 200, () =>
+        startedMessage = "<strong>Game has started!</strong> Go go go!"
+        topicMessage = "Topic is #{@topic}."
+        if @maxWords
+          endInfo = "Limited to #{@maxWords} words or phrases."
+        else
+          endInfo = ""
+        $('#info').html("#{startedMessage} #{topicMessage} #{endInfo}").fadeIn(300)
 
       # create player objects and their dots
       for player in data.players
@@ -100,7 +110,6 @@ class Game
       @snap(data)
 
     @socket.on 'scores', (data) =>
-      console.log data
       for snap in data.snaps
         for p1 in snap.players
           player1 = @players[p1.uuid]

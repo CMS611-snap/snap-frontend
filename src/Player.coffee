@@ -4,6 +4,7 @@ RADIUS = 3
 class Player
   constructor: (@two, @name, @id, color) ->
     @words = {}
+    @word_count = 0
     @opacity = if color then 1 else 0.6
     @color = color || "#000000"
     @pos   = { x: Math.random() * 200, y: Math.random() * 200}
@@ -26,6 +27,8 @@ class Player
     @score += pts
 
   addWord: (word) =>
+    if not @words[word]?
+      @word_count++
     @words[word] = true
 
   snap: (player) ->
