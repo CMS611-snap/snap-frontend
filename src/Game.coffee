@@ -21,6 +21,8 @@ class Game
     $('#wordForm').submit (evt) =>
       evt.preventDefault()
       word = $('#word').val()
+      if word == ""
+        return
       @sendWord word, (snap) =>
         @player.addWord word
         if @maxWords and @player.word_count >= @maxWords
