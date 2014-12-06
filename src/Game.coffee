@@ -73,6 +73,7 @@ class Game
 
       # update the display
       $('#word').removeAttr('disabled')
+      $('#word').attr('placeholder', 'Enter a word and press enter')
       $('#info').fadeOut 200, =>
           $('#info').html('<strong> Game has started! </strong> Go go go! Topic is '+ @topic+'.').fadeIn(300)
 
@@ -93,6 +94,7 @@ class Game
       $('#info').fadeOut 200, =>
           $('#info').html('<strong> Game Over! </strong> Congratulations to winners: '+ "<marquee>#{winners}</marquee>").fadeIn(300)
       $('#word').prop('disabled', true)
+      $('#word').attr('placeholder', 'Please wait for the game to start')
 
     @socket.on 'snap', (data) =>
       @snap(data)
