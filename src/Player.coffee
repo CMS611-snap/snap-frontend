@@ -74,6 +74,33 @@ class Player
 
     drawLine.start()
 
+  snapAnim: (word,playerList) =>
+    console.log 'word '+word
+    if playerList.length >= 3
+      info = 'snap '+word+ ' with '+playerList.length+' players'
+    else
+      info = 'snap '+word+ ' with '+playerList.join(', ')
+    snapAlert = $('<div />').appendTo('#main')
+    snapAlert.attr('id','snapAlert')
+    $('#snapAlert').append('<p><span style=\'font-weight:bold\'>'+info+'</span></p>')
+    $('#snapAlert').css({
+      'display':'none',
+      'top':'300px',
+      'width':'50%', 'margin':'0 auto',
+      'text-align':'center'})
+
+    fadeIn = new TWEEN.Tween(snapAlert)
+                      .to({},2000)
+                      .onUpdate(=>$('#snapAlert').css('display','inline'))
+    fadeOut = new TWEEN.Tween(snapAlert)
+                      .to({},2000)
+                      .onUpdate(=>$('#snapAlert').remove())
+    fadeIn.chain(fadeOut)
+
+    fadeIn.start()
+
+    
+
   snapSubtle: (player) ->
     # draw a line from current player to other player
     line        = @two.makeLine(@pos.x, @pos.y, @pos.x, @pos.y)

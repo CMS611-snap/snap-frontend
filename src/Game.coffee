@@ -133,11 +133,14 @@ class Game
       location.reload()
 
   snap: (data) ->
+    console.log data
     @player.addPoints data.d_score
     snappedPlayers = data.player.filter (p) => p.name isnt @player.name
     for player in snappedPlayers
       @player.snap(@players[player.uuid])
     playerNames = snappedPlayers.map (p) -> p.name
+
+    @player.snapAnim data.word, playerNames
 
     # Play a random snap sound
     sound = "#snap" + Math.floor(Math.random() * 12)
