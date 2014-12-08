@@ -8,6 +8,7 @@ class Game
     @player  = null
     @timer = null
     @maxWords = null
+    @maxScore = null
     @topic   = ''
     width  = $('#col2').width()
     height = $('#col2').height()
@@ -66,7 +67,10 @@ class Game
 
     @socket.emit 'new player', playerName
 
-    @socket.on 'user joined', (identifier) => @player.id = identifier.uuid
+    @socket.on 'user joined', (identifier) => 
+      console.log identifier.uuid
+      @player.id = identifier.uuid
+
 
     @socket.on 'game started', (data) =>
       #start client timer here
@@ -75,6 +79,7 @@ class Game
         @timer = new Timer('#time', parseInt(data.elapsed/1000))
         @timer.startInterval()
       @maxWords = data.maxWords
+      @maxScore = data.maxScore
       @topic = data.topic
 
       # update the display
@@ -112,6 +117,15 @@ class Game
       @snap(data)
 
     @socket.on 'scores', (data) =>
+      console.log @player.id
+      maxScore = Math.max.apply(Math, data.scores.map((p)->p.score))
+      for s in data.scores
+        if s.player.uuid isnt @player.id
+          y = (1-s.score/Math.max(1,maxScore)) * @viz.two.height
+          @players[s.player.uuid].move(Math.max(10,Math.min(@viz.two.height-10,y)))
+        else
+          y = (1-@player.score/Math.max(1,maxScore)) * @viz.two.height
+          @player.move(Math.max(10,Math.min(@viz.two.height-10,y)))
       for snap in data.snaps
         for p1 in snap.players
           player1 = @players[p1.uuid]

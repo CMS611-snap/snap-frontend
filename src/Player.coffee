@@ -7,8 +7,9 @@ class Player
     @word_count = 0
     @opacity = if color then 1 else 0.6
     @color = color || "#000000"
-    @pos   = { x: Math.random() * 200, y: Math.random() * 200}
+    @pos   = { x: Math.random() * 200, y: $('#viz').height()-10}
     @score = 0
+    @circle = null
     @draw()
 
   draw: ->
@@ -30,6 +31,12 @@ class Player
     if not @words[word]?
       @word_count++
     @words[word] = true
+
+
+  move: (yPos) ->
+    @pos.y = yPos
+    @circle.remove()
+    @draw()
 
   snap: (player) ->
     # TODO: add players that join late so this doesn't happen
@@ -90,10 +97,10 @@ class Player
       'text-align':'center'})
 
     fadeIn = new TWEEN.Tween(snapAlert)
-                      .to({},2000)
+                      .to({},1000)
                       .onUpdate(=>$('#snapAlert').css('display','inline'))
     fadeOut = new TWEEN.Tween(snapAlert)
-                      .to({},2000)
+                      .to({},1000)
                       .onUpdate(=>$('#snapAlert').remove())
     fadeIn.chain(fadeOut)
 
