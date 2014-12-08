@@ -5,18 +5,19 @@ class Player
   constructor: (@two, @name, @id, color) ->
     @words = {}
     @word_count = 0
-    @pos   = { x: 0, y: $('#viz').height()-10}
+    @opacity = if color then 1 else 0.6
+    @color = color || "#000000"
+    @pos   = { x: RADIUS, y: $('#viz').height()-10}
     @score = 0
-    circle = @two.makeCircle(0, 0, RADIUS)
-    circle.fill = color || "#000000"
-    circle.opacity = if color then 1 else 0.6
-    circle.noStroke()
-    @circle = @two.makeGroup(circle)
+    @circle = null
     @draw()
 
   draw: ->
-    @circle.translation.set(@pos.x, @pos.y)
-    @two.update()
+    @two.remove @circle if @circle
+    @circle = @two.makeCircle(@pos.x, @pos.y, RADIUS)
+    @circle.fill = @color
+    @circle.opacity = @opacity
+    @circle.noStroke()
 
   reset: () =>
     @words = {}
@@ -32,7 +33,6 @@ class Player
     if not @words[word]?
       @word_count++
     @words[word] = true
-
 
   move: (yPos) ->
     # TODO(sdrammis): animate the y position to yPos

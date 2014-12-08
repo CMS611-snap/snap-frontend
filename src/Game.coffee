@@ -100,8 +100,8 @@ class Game
 
       # create player objects and their dots
       for id, player of @players
-        @player.remove()
-        delete @players[id]
+        player.remove()
+      @players = {}
       for player in data.players
         if player.uuid isnt @player.id
           @players[player.uuid] = new Player(@viz.two, player.name, player.uuid)
@@ -189,17 +189,19 @@ class Game
         return io.connect('https://snapgame.herokuapp.com:443', {secure: true})
 
   positionPlayers: ->
-    players = [@player]
-    for _, player of @players
-      players.push(player)
+    players = []
+    for id, player of @players
+      if id != @player.id
+        players.push(player)
     players.sort (a,b) ->
       if a.id < b.id
         return -1
       if a.id > b.id
         return 1
       return 0
+    numPlayers = players.length + 1
     for player, i in players
-      player.moveX i / players.length
+      player.moveX (i + 1) / numPlayers
     null
 
 module.exports = Game
