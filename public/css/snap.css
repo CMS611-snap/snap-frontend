@@ -28,6 +28,7 @@ html,body {
 }
 
 #wordList {
+    height: 500px;
     overflow:auto;
 }
 #wordForm {
