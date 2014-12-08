@@ -67,13 +67,18 @@ class Game
 
     @socket.emit 'new player', playerName
 
-    @socket.on 'user joined', (identifier) => 
-      console.log identifier.uuid
+    @socket.on 'Player ID', (identifier) => 
       @player.id = identifier.uuid
 
+    @socket.on 'userJoin', (data)=>
+      player = data.identifier
+      if player.uuid isnt @player.id
+        @players[player.uuid] = new Player(@viz.two,player.name,player.uuid)
 
     @socket.on 'game started', (data) =>
       #start client timer here
+      console.log @player.id
+      console.log data.players
       if data.elapsed
         $("#timeContainer").html('<p class="text-left">TIME: <span id="time"></span></p>')
         @timer = new Timer('#time', parseInt(data.elapsed/1000))
@@ -96,6 +101,7 @@ class Game
 
       # create player objects and their dots
       for player in data.players
+        console.log player.uuid
         if player.uuid isnt @player.id
           @players[player.uuid] = new Player(@viz.two, player.name, player.uuid)
 
