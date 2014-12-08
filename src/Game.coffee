@@ -117,7 +117,6 @@ class Game
       @snap(data)
 
     @socket.on 'scores', (data) =>
-      console.log @player.id
       maxScore = Math.max.apply(Math, data.scores.map((p)->p.score))
       for s in data.scores
         if s.player.uuid isnt @player.id
