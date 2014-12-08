@@ -40,7 +40,7 @@ class Game
         if error == "duplicate"
           $('#word').addClass('usedWord')
         else
-          console.log "error submitting #{word}: #{error}"
+          console.warn "error submitting #{word}: #{error}"
         $("#wordWrapper").effect('shake', {distance: 10})
 
     @socket = @setupSocket()
@@ -74,11 +74,10 @@ class Game
       player = data.identifier
       if player.uuid isnt @player.id
         @players[player.uuid] = new Player(@viz.two,player.name,player.uuid)
+      @positionPlayers()
 
     @socket.on 'game started', (data) =>
       #start client timer here
-      console.log @player.id
-      console.log data.players
       if data.elapsed
         $("#timeContainer").html('<p class="text-left">TIME: <span id="time"></span></p>')
         @timer = new Timer('#time', parseInt(data.elapsed/1000))
@@ -100,15 +99,18 @@ class Game
         $('#info').html("#{startedMessage} #{topicMessage} #{endInfo}").fadeIn(300)
 
       # create player objects and their dots
+      for id, player of @players
+        @player.remove()
+        delete @players[id]
       for player in data.players
-        console.log player.uuid
         if player.uuid isnt @player.id
           @players[player.uuid] = new Player(@viz.two, player.name, player.uuid)
+      @positionPlayers()
 
     @socket.on 'game over', (data) =>
       winners = data.winners.map((p) -> p.name).join(', ')
       for id, player of @players
-        player.reset()
+        @players[id].reset()
 
       @player.reset()
 
@@ -124,6 +126,7 @@ class Game
 
     @socket.on 'scores', (data) =>
       maxScore = Math.max.apply(Math, data.scores.map((p)->p.score))
+      maxScore = Math.max(maxScore, 5)
       for s in data.scores
         if s.player.uuid isnt @player.id
           y = (1-s.score/Math.max(1,maxScore)) * @viz.two.height
@@ -152,7 +155,6 @@ class Game
       location.reload()
 
   snap: (data) ->
-    console.log data
     @player.addPoints data.d_score
     snappedPlayers = data.player.filter (p) => p.name isnt @player.name
     for player in snappedPlayers
@@ -185,5 +187,19 @@ class Game
         return io.connect('https://snap-backend-dev.herokuapp.com:443', {secure: true})
       else
         return io.connect('https://snapgame.herokuapp.com:443', {secure: true})
+
+  positionPlayers: ->
+    players = [@player]
+    for _, player of @players
+      players.push(player)
+    players.sort (a,b) ->
+      if a.id < b.id
+        return -1
+      if a.id > b.id
+        return 1
+      return 0
+    for player, i in players
+      player.moveX i / players.length
+    null
 
 module.exports = Game

@@ -5,24 +5,25 @@ class Player
   constructor: (@two, @name, @id, color) ->
     @words = {}
     @word_count = 0
-    @opacity = if color then 1 else 0.6
-    @color = color || "#000000"
-    @pos   = { x: Math.random() * 200, y: $('#viz').height()-10}
+    @pos   = { x: 0, y: $('#viz').height()-10}
     @score = 0
-    @circle = null
+    circle = @two.makeCircle(0, 0, RADIUS)
+    circle.fill = color || "#000000"
+    circle.opacity = if color then 1 else 0.6
+    circle.noStroke()
+    @circle = @two.makeGroup(circle)
     @draw()
 
   draw: ->
-    @two.remove @circle if @circle
-    @circle = @two.makeCircle(@pos.x, @pos.y, RADIUS)
-    @circle.fill    = @color
-    @circle.opacity = @opacity
-    @circle.noStroke()
+    @circle.translation.set(@pos.x, @pos.y)
+    @two.update()
 
   reset: () =>
     @words = {}
     @score = 0
-    @draw()
+
+  remove: () =>
+    @circle.remove()
 
   addPoints: (pts) ->
     @score += pts
@@ -34,8 +35,16 @@ class Player
 
 
   move: (yPos) ->
+    # TODO(sdrammis): animate the y position to yPos
     @pos.y = yPos
-    @circle.remove()
+    @draw()
+
+  moveX: (relXPos) ->
+    @pos.x = Math.floor(relXPos * 400)
+    if @pos.x < RADIUS
+      @pos.x = RADIUS
+    if @pos.x > 400 - RADIUS
+      @pos.x = 400 - RADIUS
     @draw()
 
   snap: (player) ->
@@ -82,7 +91,6 @@ class Player
     drawLine.start()
 
   snapAnim: (word,playerList) =>
-    console.log 'word '+word
     if playerList.length >= 3
       info = 'snap '+word+ ' with '+playerList.length+' players'
     else
