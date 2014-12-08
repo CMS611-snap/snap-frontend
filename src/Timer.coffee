@@ -3,6 +3,7 @@ class Timer
     @seconds = 0
     @minutes = 0
     @hours = 0
+    @startTime = null
     @interval = undefined
 
     if @elapsed
@@ -43,14 +44,16 @@ class Timer
     return timeString
 
   startInterval: () ->
+    @startTime = Date.now()
     stepSecond = () =>
-      @seconds++
-      if @seconds >= 60
-        @seconds = @seconds % 60
-        @minutes++
+      totalSeconds = Math.floor((Date.now() - @startTime) / 1000) + @elapsed
+      time = parseSeconds(totalSeconds)
+      @hours = time.hours
+      @minutes = time.minutes
+      @seconds = time.seconds
       $(@id).html(timeToString(@seconds, @minutes, @hours))
 
-    @interval = setInterval(stepSecond, 1000)
+    @interval = setInterval(stepSecond, 500)
 
   stop: () ->
     clearInterval(@interval)
