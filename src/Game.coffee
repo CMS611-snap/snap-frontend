@@ -55,7 +55,7 @@ class Game
 
   joinGame: (playerName) ->
     # set the main player
-    @player = new Player(@viz.two, playerName, null, "#00FF00")
+    @player = new Player(@viz.two, playerName, null, "#33ff33", "#3333ff", 5)
 
     # update the display
     $('#info').fadeOut 400, ->

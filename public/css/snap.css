@@ -83,3 +83,8 @@ html,body {
     padding: 10px;
     text-align: center;
 }
+
+#col2 {
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+}

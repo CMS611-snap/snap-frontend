@@ -2,22 +2,26 @@ TWEEN  = require 'tween.js'
 RADIUS = 3
 
 class Player
-  constructor: (@two, @name, @id, color) ->
+  constructor: (@two, @name, @id, color, border, radius) ->
     @words = {}
     @word_count = 0
     @opacity = if color then 1 else 0.6
     @color = color || "#000000"
-    @pos   = { x: RADIUS, y: $('#viz').height()-10}
+    @border = border || "#000000"
+    @radius = radius || RADIUS
+    @pos   = { x: @radius + 10, y: $('#viz').height()-10}
     @score = 0
     @circle = null
     @draw()
 
   draw: ->
     @two.remove @circle if @circle
-    @circle = @two.makeCircle(@pos.x, @pos.y, RADIUS)
+    @circle = @two.makeCircle(@pos.x, @pos.y, @radius)
     @circle.fill = @color
+    @circle.stroke = @border
+    @circle.linewidth = 2
     @circle.opacity = @opacity
-    @circle.noStroke()
+    @two.update()
 
   reset: () =>
     @words = {}
@@ -41,10 +45,10 @@ class Player
 
   moveX: (relXPos) ->
     @pos.x = Math.floor(relXPos * 400)
-    if @pos.x < RADIUS
-      @pos.x = RADIUS
-    if @pos.x > 400 - RADIUS
-      @pos.x = 400 - RADIUS
+    if @pos.x < @radius
+      @pos.x = @radius
+    if @pos.x > 400 - @radius
+      @pos.x = 400 - @radius
     @draw()
 
   snap: (player) ->
@@ -57,7 +61,7 @@ class Player
     line.stroke = "rgba(0, 255, 0, 1)"
 
     # green circle for player that we snap with
-    greenCircle = @two.makeCircle(player.pos.x, player.pos.y, RADIUS)
+    greenCircle = @two.makeCircle(player.pos.x, player.pos.y, @radius)
     greenCircle.fill    = "#00FF00"
     greenCircle.opacity = 0
     greenCircle.noStroke()
